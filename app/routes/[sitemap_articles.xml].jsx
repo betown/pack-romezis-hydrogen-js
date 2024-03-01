@@ -1,0 +1,41 @@
+import {CMS_ARTICLES_QUERY} from '~/data/queries';
+import {generatedSitemapFromPages} from '~/lib/utils';
+
+export async function loader({context}) {
+  const SITE_DOMAIN = context.storefront.getShopifyDomain();
+
+  const getArticlePages = async ({first, pages, cursor}) => {
+    const {data} = await context.pack.query(CMS_ARTICLES_QUERY, {
+      variables: {first, cursor},
+      cache: context.storefront.CacheShort(),
+    });
+    const {endCursor, hasNextPage} = data.articles.pageInfo;
+    const compiledPages = [...(pages || []), ...data.articles.nodes];
+    if (hasNextPage && compiledPages.length < 10000) {
+      return getArticlePages({
+        first: Math.min(10000 - compiledPages.length, 100),
+        pages: compiledPages,
+        cursor: endCursor,
+      });
+    }
+    return compiledPages;
+  };
+  const articles = await getArticlePages({
+    first: 250,
+    pages: null,
+    cursor: null,
+  });
+  const sitemap = generatedSitemapFromPages({
+    pages: articles,
+    siteUrl: SITE_DOMAIN,
+    route: 'articles',
+  });
+
+  return new Response(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'xml-version': '1.0',
+      encoding: 'UTF-8',
+    },
+  });
+}

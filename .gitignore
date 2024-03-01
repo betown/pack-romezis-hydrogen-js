@@ -1,0 +1,20 @@
+node_modules
+
+/.cache
+/build
+/dist
+/public/build
+/.mf
+.env
+.shopify
+
+# IntelliJ
+.idea
+
+# OS-specific files
+.DS_Store
+
+# yalc 
+yalc.lock
+.yalc
+

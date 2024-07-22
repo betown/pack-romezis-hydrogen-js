@@ -143,17 +143,6 @@ export const Schema = () => {
             name: 'product',
             label: 'Product',
           },
-          {
-            component: 'toggle',
-            name: 'showPrice',
-            label: 'Show Price?',
-            toggleLabels: {
-              true: 'Yes',
-              false: 'No',
-            },
-            description:
-              "Adds the current product price next to the step's title",
-          },
         ],
       },
       {

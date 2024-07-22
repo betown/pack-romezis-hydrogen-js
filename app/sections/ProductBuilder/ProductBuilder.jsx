@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Schema} from './ProductBuilder.schema';
 import {ProductBuilderProvider} from './ProductBuilderContext';
 import {Container} from '~/components';
@@ -28,6 +28,13 @@ export function ProductBuilder({cms}) {
       };
     });
   };
+
+  useEffect(() => {
+    updateProductBuilderData({
+      page: 1,
+      selectedProducts: [],
+    });
+  }, [cms.bundlePiece]);
 
   return (
     <ProductBuilderProvider

@@ -45,7 +45,7 @@ export function ProductBuilderGallery() {
     }
 
     setProductImages([currentProductImage]);
-  }, [currentPage, currentPageProduct, imagesReferences]);
+  }, [currentPage, currentPageProduct?.id, imagesReferences]);
 
   useEffect(() => {
     const galleryImages = Array.from(galleryContainer?.current?.children);
@@ -57,7 +57,7 @@ export function ProductBuilderGallery() {
     if (lastImage && imageLoaded) {
       lastImage.classList.add('translate-y-0', 'opacity-100');
     }
-  }, [lastImage.current]);
+  }, [lastImage.current, currentPageProduct?.id]);
 
   return (
     <div className="sticky top-0 aspect-video" ref={galleryContainer}>

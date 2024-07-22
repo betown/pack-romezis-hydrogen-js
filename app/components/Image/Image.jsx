@@ -15,6 +15,7 @@ export const Image = forwardRef(
       aspectRatio,
       className,
       data,
+      sizes,
       width: passedWidth,
 
       // sets only 1 srcSet option that is 3x scale
@@ -42,6 +43,7 @@ export const Image = forwardRef(
         data={data}
         aspectRatio={aspectRatio}
         width={width}
+        sizes={sizes}
         className={`bg-offWhite object-cover ${className}`}
         srcSetOptions={
           isStatic && isPxWidth
@@ -63,7 +65,7 @@ export const Image = forwardRef(
     ) : (
       <div
         ref={ref}
-        className={`relative overflow-hidden bg-offWhite ${className}`}
+        className={`loading-placeholder relative overflow-hidden bg-offWhite ${className}`}
         style={{
           aspectRatio,
           width: isPxWidth ? `${width}px` : width || '100%',
